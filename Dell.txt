@@ -1,0 +1,217 @@
+# Description: Boxstarter Script
+# Author: 
+# Last Updated: 
+#
+# Install boxstarter:
+# 	. { iwr -useb http://boxstarter.org/bootstrapper.ps1 } | iex; get-boxstarter -Force
+#
+# You might need to set: Set-ExecutionPolicy RemoteSigned
+#
+# Run this boxstarter by calling the following from an **elevated** command-prompt:
+# 	start http://boxstarter.org/package/nr/url?<URL-TO-RAW-GIST>
+# OR
+# 	Install-BoxstarterPackage -PackageName D:\dell.txt -DisableReboots
+#
+# Learn more: http://boxstarter.org/Learn/WebLauncher
+
+# ---- TEMPORARY ---
+Disable-UAC
+
+# --- Windows Settings ---
+Disable-BingSearch
+Disable-GameBarTips
+
+#Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -EnableShowProtectedOSFiles -EnableShowFileExtensions
+#Set-TaskbarOptions -Size Small -Dock Bottom -Combine Full -Lock
+#Set-TaskbarOptions -Size Small -Dock Bottom -Combine Full -AlwaysShowIconsOn
+
+#--- Uninstall unecessary applications that come with Windows out of the box ---
+
+# 3D Builder
+Get-AppxPackage Microsoft.3DBuilder | Remove-AppxPackage
+
+# Alarms
+Get-AppxPackage Microsoft.WindowsAlarms | Remove-AppxPackage
+
+# Autodesk
+Get-AppxPackage *Autodesk* | Remove-AppxPackage
+
+# Bing Weather, News, Sports, and Finance (Money):
+Get-AppxPackage Microsoft.BingFinance | Remove-AppxPackage
+Get-AppxPackage Microsoft.BingNews | Remove-AppxPackage
+Get-AppxPackage Microsoft.BingSports | Remove-AppxPackage
+Get-AppxPackage Microsoft.BingWeather | Remove-AppxPackage
+
+# BubbleWitch
+Get-AppxPackage *BubbleWitch* | Remove-AppxPackage
+
+# Candy Crush
+Get-AppxPackage king.com.CandyCrush* | Remove-AppxPackage
+
+# Comms Phone
+Get-AppxPackage Microsoft.CommsPhone | Remove-AppxPackage
+
+# Dell
+#Get-AppxPackage *Dell* | Remove-AppxPackage
+
+# networkspeed
+Get-AppxPackage *NetworkSpeedTest* | Remove-AppxPackage
+
+# Dropbox
+Get-AppxPackage *Dropbox* | Remove-AppxPackage
+
+# Duo
+Get-AppxPackage *Duolingo* | Remove-AppxPackage
+
+# Photoshop Express
+Get-AppxPackage *AdobePhotoshopExpress* | Remove-AppxPackage
+
+# Facebook
+Get-AppxPackage *Facebook* | Remove-AppxPackage
+
+# Feedback Hub
+Get-AppxPackage Microsoft.WindowsFeedbackHub | Remove-AppxPackage
+
+# Get Started
+Get-AppxPackage Microsoft.Getstarted | Remove-AppxPackage
+
+# Keeper
+Get-AppxPackage *Keeper* | Remove-AppxPackage
+
+# Mail & Calendar
+Get-AppxPackage microsoft.windowscommunicationsapps | Remove-AppxPackage
+
+# Maps
+# Get-AppxPackage Microsoft.WindowsMaps | Remove-AppxPackage
+
+# March of Empires
+Get-AppxPackage *MarchofEmpires* | Remove-AppxPackage
+
+# McAfee Security
+Get-AppxPackage *McAfee* | Remove-AppxPackage
+
+# Uninstall McAfee Security App
+$mcafee = gci "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall" | foreach { gp $_.PSPath } | ? { $_ -match "McAfee Security" } | select UninstallString
+if ($mcafee) {
+	$mcafee = $mcafee.UninstallString -Replace "C:\Program Files\McAfee\MSC\mcuihost.exe",""
+	Write "Uninstalling McAfee..."
+	start-process "C:\Program Files\McAfee\MSC\mcuihost.exe" -arg "$mcafee" -Wait
+}
+
+# Messaging
+Get-AppxPackage Microsoft.Messaging | Remove-AppxPackage
+
+# Minecraft
+Get-AppxPackage *Minecraft* | Remove-AppxPackage
+
+# Pandora
+Get-AppxPackage PandoraMediaInc.* | Remove-AppxPackage
+
+# Netflix
+Get-AppxPackage *Netflix* | Remove-AppxPackage
+
+# Office Hub
+Get-AppxPackage Microsoft.MicrosoftOfficeHub | Remove-AppxPackage
+
+# One Connect
+Get-AppxPackage Microsoft.OneConnect | Remove-AppxPackage
+
+# OneNote
+Get-AppxPackage Microsoft.Office.OneNote | Remove-AppxPackage
+
+# People
+Get-AppxPackage Microsoft.People | Remove-AppxPackage
+
+# Power BI
+Get-AppxPackage Microsoft.MicrosoftPowerBIForWindows | Remove-AppxPackage
+
+# Phone
+Get-AppxPackage Microsoft.WindowsPhone | Remove-AppxPackage
+
+# Photos
+#Get-AppxPackage Microsoft.Windows.Photos | Remove-AppxPackage
+
+# Plex
+Get-AppxPackage *Plex* | Remove-AppxPackage
+
+# Skype (Metro version)
+Get-AppxPackage Microsoft.SkypeApp | Remove-AppxPackage
+
+# Sound Recorder
+Get-AppxPackage Microsoft.WindowsSoundRecorder | Remove-AppxPackage
+
+# Solitaire
+Get-AppxPackage *Solitaire* | Remove-AppxPackage
+
+# Sticky Notes
+# Get-AppxPackage Microsoft.MicrosoftStickyNotes | Remove-AppxPackage
+
+# Sway
+Get-AppxPackage Microsoft.Office.Sway | Remove-AppxPackage
+
+# Twitter
+Get-AppxPackage *Twitter* | Remove-AppxPackage
+
+# Wallet
+Get-AppxPackage Microsoft.Wallet | Remove-AppxPackage
+
+# Xbox
+#Get-AppxPackage Microsoft.XboxApp | Remove-AppxPackage
+#Get-AppxPackage Microsoft.XboxIdentityProvider | Remove-AppxPackage
+
+# Zune Music, Movies & TV
+Get-AppxPackage Microsoft.ZuneMusic | Remove-AppxPackage
+Get-AppxPackage Microsoft.ZuneVideo | Remove-AppxPackage
+
+# Remove OneDrive
+#C:\windows\SysWOW64\OneDriveSetup.exe /uninstall
+
+
+
+#--- Apps ---
+choco install googlechrome
+choco install firefox
+# choco install office365business
+# choco install vlc
+# choco install javaruntime
+#choco install flashplayerplugin
+#choco install silverlight
+# choco install k-litecodecpackfull
+#choco install onedrive
+#choco install microsoft-teams
+#choco install itunes
+choco install adobereader
+#choco install lightshot
+#choco install 8x8virtualoffice
+
+
+
+Remove-Item C:\Users\*\Desktop\*lnk –Force
+
+#--- Windows Settings ---
+# Some from: @NickCraver's gist https://gist.github.com/NickCraver/7ebf9efbfd0c3eab72e9
+
+# Start Menu: Disable Bing Search Results
+Set-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search -Name BingSearchEnabled -Type DWord -Value 0
+# To Restore (Enabled):
+# Set-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search -Name BingSearchEnabled -Type DWord -Value 1
+
+
+# Disable the Lock Screen (the one before password prompt - to prevent dropping the first character)
+# If (-Not (Test-Path HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization)) {
+#	New-Item -Path HKLM:\SOFTWARE\Policies\Microsoft\Windows -Name Personalization | Out-Null
+# }
+# Set-ItemProperty -Path HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization -Name NoLockScreen -Type DWord -Value 1
+# To Restore:
+# Set-ItemProperty -Path HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization -Name NoLockScreen -Type DWord -Value 1
+
+
+# Disable Xbox Gamebar
+Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR" -Name AppCaptureEnabled -Type DWord -Value 0
+Set-ItemProperty -Path "HKCU:\System\GameConfigStore" -Name GameDVR_Enabled -Type DWord -Value 0
+
+
+# --- Restore Temporary Settings ---
+Enable-UAC
+Enable-MicrosoftUpdate
+Install-WindowsUpdate -acceptEula
